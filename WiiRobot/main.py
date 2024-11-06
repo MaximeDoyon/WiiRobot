@@ -1,116 +1,63 @@
-#!/usr/bin/python
-# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-# |R|a|s|p|b|e|r|r|y|P|i|-|S|p|y|.|c|o|.|u|k|
-# +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
-#
-# wii_remote_1.py
-# Connect a Nintendo Wii Remote via Bluetooth
-# and  read the button states in Python.
-#
-# Project URL :
-# https://www.raspberrypi-spy.co.uk/?p=1101
-#
-# Author : Matt Hawkins
-# Date   : 30/01/2013
+#!/usr/bin/env python3
 
-# -----------------------
-# Import required Python libraries
-# -----------------------
-import cwiid
+import wiimote
 import time
+import sys
 
-button_delay = 0.1
+"""
+A simple demo script for the wiimote.py module.
+Start as `python3 wiimote_demo.py [bluetooth address of Wiimote]` and follow
+instructions.
+"""
 
-print
-'Press 1 + 2 on your Wii Remote now ...'
-time.sleep(1)
+input("Press the 'sync' button on the back of your Wiimote Plus " +
+      "or buttons (1) and (2) on your classic Wiimote.\n" +
+      "Press <return> once the Wiimote's LEDs start blinking.")
 
-# Connect to the Wii Remote. If it times out
-# then quit.
-try:
-    wii = cwiid.Wiimote()
-except RuntimeError:
-    print
-    "Error opening wiimote connection"
-    quit()
+if len(sys.argv) == 1:
+    addr, name = wiimote.find()[0]
+elif len(sys.argv) == 2:
+    addr = sys.argv[1]
+    name = None
 
-print
-'Wii Remote connected...\n'
-print
-'Press some buttons!\n'
-print
-'Press PLUS and MINUS together to disconnect and quit.\n'
+elif len(sys.argv) == 3:
+    addr, name = sys.argv[1:3]
+print(("Connecting to %s (%s)" % (name, addr)))
+wm = wiimote.connect(addr, name)
 
-wii.rpt_mode = cwiid.RPT_BTN
+# Demo Time!
+patterns = [[1, 0, 0, 0],
+            [0, 1, 0, 0],
+            [0, 0, 1, 0],
+            [0, 0, 0, 1],
+            [0, 0, 1, 0],
+            [0, 1, 0, 0],
+            [1, 0, 0, 0]]
+for i in range(5):
+    for p in patterns:
+        wm.leds = p
+        time.sleep(0.05)
+
+
+def print_ir(ir_data):
+    if len(ir_data) == 0:
+        return
+    for ir_obj in ir_data:
+        # print("%4d %4d %2d     " % (ir_obj["x"],ir_obj["y"],ir_obj["size"]), end=' ')
+        print("%4d %4d %2d     " % (ir_obj["x"], ir_obj["y"], ir_obj["size"]))
+    print()
+
+#wm.ir.register_callback(print_ir)
 
 while True:
-
-    buttons = wii.state['buttons']
-
-    # If Plus and Minus buttons pressed
-    # together then rumble and quit.
-    if (buttons - cwiid.BTN_PLUS - cwiid.BTN_MINUS == 0):
-        print
-        '\nClosing connection ...'
-        wii.rumble = 1
-        time.sleep(1)
-        wii.rumble = 0
-        exit(wii)
-
-    # Check if other buttons are pressed by
-    # doing a bitwise AND of the buttons number
-    # and the predefined constant for that button.
-    if (buttons & cwiid.BTN_LEFT):
-        print
-        'Left pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_RIGHT):
-        print
-        'Right pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_UP):
-        print
-        'Up pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_DOWN):
-        print
-        'Down pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_1):
-        print
-        'Button 1 pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_2):
-        print
-        'Button 2 pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_A):
-        print
-        'Button A pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_B):
-        print
-        'Button B pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_HOME):
-        print
-        'Home Button pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_MINUS):
-        print
-        'Minus Button pressed'
-        time.sleep(button_delay)
-
-    if (buttons & cwiid.BTN_PLUS):
-        print
-        'Plus Button pressed'
-        time.sleep(button_delay)
+    if wm.buttons["A"]:
+        wm.leds[1] = True
+        #wm.rumble(0.1)
+        print((wm.accelerometer))
+    elif wm.buttons["B"]:
+        wm.speaker.beep()
+        #print("beep")
+    else:
+        wm.leds[1] = False
+        pass
+    time.sleep(0.05)
