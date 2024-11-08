@@ -3,6 +3,13 @@
 import wiimote
 import time
 import sys
+from pyniryo import *
+import time
+ip_robot_address = "10.4.1.51"
+
+robot = NiryoRobot(ip_robot_address)
+robot.calibrate_auto()
+robot.update_tool()
 
 """
 A simple demo script for the wiimote.py module.
@@ -48,12 +55,28 @@ def print_ir(ir_data):
     print()
 
 #wm.ir.register_callback(print_ir)
+home = (-0.029,-0.178,0.428,-2.053,1.481,2.489)
+robot.move_pose(home)
+current_position =robot.get_pose()
 
+x = 0.1
 while True:
     if wm.buttons["A"]:
         wm.leds[1] = True
         #wm.rumble(0.1)
         print((wm.accelerometer))
+        if(wm.accelerometer[0]>0):
+            current_position.x += 0.05
+            robot.move_pose(current_position)
+        if (wm.accelerometer[0] <= 0):
+            current_position.x -= 0.05
+            robot.move_pose(current_position)
+        if (wm.accelerometer[1] > 0):
+            current_position.y += 0.05
+            robot.move_pose(current_position)
+        if (wm.accelerometer[1] <= 0):
+            current_position.y -= 0.05
+            robot.move_pose(current_position)
     elif wm.buttons["B"]:
         wm.speaker.beep()
         #print("beep")
