@@ -116,8 +116,17 @@ while True:
         robot.close_gripper()
     elif wm.buttons["Minus"]:
         robot.open_gripper()
-
+    elif wm.buttons["One"]:
+        robot.run_conveyor(ConveyorID.ID_1, 100, ConveyorDirection.BACKWARD)
+    elif wm.buttons["Two"]:
+        robot.run_conveyor(ConveyorID.ID_1, 100, ConveyorDirection.FORWARD)
+    elif wm.buttons["Left"]:
+        robot.jog_pose([0,0,0,0,0,0.1])
+    elif wm.buttons["Right"]:
+        robot.jog_pose([0,0,0,0,0,-0.1])
     else:
+        robot.stop_conveyor(ConveyorID.ID_1)
         wm.leds[1] = False
         pass
+
     time.sleep(0.1)
