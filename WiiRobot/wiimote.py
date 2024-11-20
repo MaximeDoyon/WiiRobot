@@ -85,7 +85,7 @@ def find():
     wiimotes = []
     print(devices)
     for device in devices:
-        print(device)
+        #print(device)
         if device["name"] in KNOWN_DEVICES:
 
             wiimotes.append((device["host"], device["name"]))
@@ -208,7 +208,7 @@ class Accelerometer(object):
 
     def handle_report(self, report):
         def arrondir_a_20(number):
-            return round(number/20)*20
+            return round(number/40)*40
         """
         Extract accelerometer data from a Wiimote report.
         Usually gets called by the Wiimote CommunicationHandler object.
@@ -217,8 +217,8 @@ class Accelerometer(object):
             raise NotImplementedError("Data reporting mode 0x3e/0x3f not supported")
         x_msb, y_msb, z_msb = report[3:6]
         x = arrondir_a_20((x_msb << 2) + ((report[1] & 0b01100000) >> 5)-500)
-        y = arrondir_a_20((y_msb << 2) + ((report[2] & 0b00100000) >> 4)-500)
-        z = arrondir_a_20((z_msb << 2) + ((report[2] & 0b01000000) >> 5)-610)
+        y = arrondir_a_20((y_msb << 2) + ((report[2] & 0b00100000) >> 4)-420)
+        z = arrondir_a_20((z_msb << 2) + ((report[2] & 0b01000000) >> 5)-530)
         self._state = [x, y, z]
         self._notify_callbacks()
 
