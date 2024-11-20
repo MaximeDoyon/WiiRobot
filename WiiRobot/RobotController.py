@@ -27,7 +27,7 @@ def display_robot_vision():
                 raise ValueError("Impossible de décoder l'image.")
 
             cv2.imshow("Vision en temps réel du robot Niryo", image)
-            if cv2.waitKey(1) & 0xFF == ord('q'):  # Appuie sur 'q' pour quitter l'affichage
+            if cv2.waitKey(1) & 0xFF == ord('t'):  # Appuie sur 'q' pour quitter l'affichage
                 break
         except (NiryoRobotException, ValueError) as e:
             print(f"Erreur lors de l'affichage de la vision : {e}")
@@ -118,17 +118,17 @@ try:
                 robot.close_gripper()
 
         #Rotation pince
-        elif keyboard.is_pressed("7"):
-            print("Touche '7' détectée ! Ouverture de la pince")
+        elif keyboard.is_pressed("q"):
+            print("Touche '7' détectée ! Rotation de la pince")
             with mutex:
                 position_actuelle = robot.get_pose()
-                position_actuelle.roll -= 0.2
+                position_actuelle.roll -= 0.3
                 robot.move_pose(position_actuelle)
-        elif keyboard.is_pressed("9"):
-            print("Touche '9' détectée ! Ouverture de la pince")
+        elif keyboard.is_pressed("e"):
+            print("Touche '9' détectée ! Rotation de la pince")
             with mutex:
                 position_actuelle = robot.get_pose()
-                position_actuelle.roll += 0.2
+                position_actuelle.roll += 0.3
                 robot.move_pose(position_actuelle)
 
 
@@ -154,7 +154,7 @@ try:
 except KeyboardInterrupt:
     print("Programme terminé.")
     with mutex:
-        robot.disconnect()
+        robot.close_connection()
         robot.unset_conveyor(convoyeur_id)
 
 
