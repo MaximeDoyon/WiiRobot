@@ -14,25 +14,36 @@ convoyeur_id = robot.set_conveyor()
 robot.move_pose(*au_dessus_plateforme)
 
 mutex = threading.Lock()
+
+
 def display_robot_vision():
+    cv2.namedWindow("Vision en temps réel du robot Niryo", cv2.WINDOW_NORMAL)  # Crée une seule fenêtre réutilisable
     while True:
         try:
             with mutex:
                 frame = robot.get_img_compressed()
+
             # Convertir les données brutes en tableau NumPy
             np_frame = np.frombuffer(frame, dtype=np.uint8)
+
             # Décoder les données en image
             image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
             if image is None:  # Vérifiez si la décompression a échoué
                 raise ValueError("Impossible de décoder l'image.")
 
+            # Afficher l'image dans la fenêtre
             cv2.imshow("Vision en temps réel du robot Niryo", image)
-            if cv2.waitKey(1) & 0xFF == ord('t'):  # Appuie sur 'q' pour quitter l'affichage
+
+            # Appuyer sur 't' pour quitter l'affichage
+            if cv2.waitKey(1) & 0xFF == ord('t'):
                 break
+
         except (NiryoRobotException, ValueError) as e:
             print(f"Erreur lors de l'affichage de la vision : {e}")
             break
-    cv2.destroyAllWindows()
+
+    # Détruire la fenêtre après la boucle
+    cv2.destroyWindow("Vision en temps réel du robot Niryo")
 
 # Démarrage du thread pour la vision
 vision_thread = threading.Thread(target=display_robot_vision, daemon=True)
