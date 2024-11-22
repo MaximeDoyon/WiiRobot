@@ -1,4 +1,6 @@
 import threading
+
+import cv2
 from pyniryo import *
 import time
 import keyboard
@@ -17,7 +19,7 @@ mutex = threading.Lock()
 
 
 def display_robot_vision():
-    cv2.namedWindow("Vision en temps réel du robot Niryo", cv2.WINDOW_NORMAL)  # Crée une seule fenêtre réutilisable
+
     while True:
         try:
             with mutex:
@@ -30,10 +32,10 @@ def display_robot_vision():
             image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
             if image is None:  # Vérifiez si la décompression a échoué
                 raise ValueError("Impossible de décoder l'image.")
-
+            cv2.destroyWindow()
             # Afficher l'image dans la fenêtre
             cv2.imshow("Vision en temps réel du robot Niryo", image)
-
+            time.sleep(1)
             # Appuyer sur 't' pour quitter l'affichage
             if cv2.waitKey(1) & 0xFF == ord('t'):
                 break

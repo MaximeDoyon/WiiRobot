@@ -10,6 +10,8 @@ ip_robot_address = "10.4.1.51"
 robot = NiryoRobot(ip_robot_address)
 robot.calibrate_auto()
 robot.update_tool()
+robot.set_conveyor()
+
 
 """
 A simple demo script for the wiimote.py module.
@@ -112,9 +114,9 @@ while True:
         robot.jog_pose([0,0,0.005,0,0,0])
     elif wm.buttons["Down"]:
         robot.jog_pose([0,0,-0.005,0,0,0])
-    elif wm.buttons["Plus"]:
-        robot.close_gripper()
     elif wm.buttons["Minus"]:
+        robot.close_gripper()
+    elif wm.buttons["Plus"]:
         robot.open_gripper()
     elif wm.buttons["One"]:
         robot.run_conveyor(ConveyorID.ID_1, 100, ConveyorDirection.BACKWARD)
