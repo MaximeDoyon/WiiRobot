@@ -1,4 +1,4 @@
-#Étapes pour se connecter au robot et à la manette de Wii
+# Étapes pour se connecter au robot et à la manette de Wii
 
 1. Démarrer le programme main.py (Le fichier RobotController.py est pour le contrôler avec un clavier et le fichier reset.py est simplement pour remettre le robot en Learning mode a partir de code)
 2. Appuyez sur le bouton 1 et 2 sur la manette de Wii simultanément.
