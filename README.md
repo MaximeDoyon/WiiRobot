@@ -1,9 +1,15 @@
 
 # :warning: **Mises en gardes**
 
-- Ne pas se tenir dans la zone d'opération du robot
-- Dégagez l'espace d'opération du robot de tout obstacle pour éviter des collisions qui pourraient endommager le robot ou son environnement
-- En relachant le bouton A de la manette de Wii, tout mouvement du bras robotisé est stoppé
+:no_entry_sign: Ne pas se tenir dans la zone d'opération du robot  
+:no_entry_sign: Dégagez l'espace d'opération du robot de tout obstacle pour éviter des collisions :collision: qui pourraient endommager le robot ou son environnement   
+:no_entry_sign: En relachant le bouton A de la manette de Wii, tout mouvement du bras robotisé est stoppé     
+:no_entry_sign: Le bras robotisé bougera en fonction du mouvement de la manette de Wii ( lorsque le bouton A est maintenu enfoncé)    
+
+# Installation librairies
+- Installer les dépendances (pip install -r requirements.txt)
+
+
 
 # Étapes pour se connecter au robot avec la manette de Wii
 
@@ -11,6 +17,25 @@
 2. Appuyez sur le bouton 1 et 2 sur la manette de Wii simultanément.
 3. Lorsque les lumières sur la manette de Wii clignotent, appuyez sur Enter sur le clavier (Dans la console du programme)
 4. Patientez le temps que la manette de Wii se connecte ( les lumières cesseront de clignoter et seule la première lumière restera allumée )
+
+
+# Étapes pour faire fonctionner le robot (Pince et convoyeur)
+1. Lorsque vous êtes connecté au robot avec les étapes précédentes, positionnez vous à coté du robot à distance sécuritaire.
+2. Orientez vous à 90° vers la droite du robot, de sorte à être parallèle au robot lorsque son bras est sur la plateforme.
+3. Commencez par un test simple et appuyez sur 1 ou 2 et maintenez ces boutons pour activer le convoyeur et s'assurer que tout fonctionne.
+4. Le relachement de 1 ou 2 stoppe le convoyeur.
+5. Un clic sur le bouton + ou - ouvre et ferme la pince.
+# Étapes pour faire fonctionner le robot (Mouvement du bras)
+1. Placez la manette de Wii pour qu'elle pointe vers le ciel le plus droit possible.
+2. ***Attention, la prochaine étape fera bouger le bras robotisé***
+3. Appuyez et maintenez enfoncé le bouton A de la manette et le bras se déplacera dans la direction vers laquelle la manette de Wii est inclinée.
+4. Pour faire monter et descendre la hauteur de la pince, un clic et maintient de la flèche du haut ou du bas fera cette action.
+5. Pour faire une rotation de la pince, il suffit d'appuyer et maintenir les flèches de gauche ou droite.
+# Erreur possibles :x:
+- Forcer le robot à se déplacer vers une zone "out of bound" fera stopper le programme. Vous devrez recommencer les étapes pour connecter la manette de Wii
+- Une collision avec un obstacle pourrait briser le robot et même stopper le programme par le fait même.
+
+   
 
 
 
