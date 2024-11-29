@@ -6,7 +6,15 @@
 :no_entry_sign: En relâchant le bouton A de la manette de Wii, tout mouvement du bras robotisé est stoppé     
 :no_entry_sign: Le bras robotisé bougera en fonction du mouvement de la manette de Wii ( lorsque le bouton A est maintenu enfoncé)    
 # Étapes de fonctionnement du programme
-   ## 1. Installation librairies
+   ## 1. Installation librairies (Toujours dans votre environnement virtuel)
+   - Installer les bibliothèques Bluetooth :
+   ```bash
+   sudo apt-get install bluetooth libbluetooth-dev
+   ```
+   - Installer pybluez :
+   ```bash
+   pip install git+https://github.com/pybluez/pybluez.git
+   ```
    - Installer les dépendances
    ```bash
    pip install -r requirements.txt
