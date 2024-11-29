@@ -111,14 +111,22 @@ while True:
         robot.move_pose(home)
         wm.speaker.beep()
     elif wm.buttons["B"]:
-        frame = robot.get_img_compressed()
-        np_frame = np.frombuffer(frame, dtype=np.uint8)
-        image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
-        if image is None:
-            raise ValueError("Impossible de décoder l'image.")
-        cv2.imshow("Photo", image)
-        time.sleep(5)
-        cv2.destroyWindow("Photo")
+        try:
+            frame = robot.get_img_compressed()
+            np_frame = np.frombuffer(frame, dtype=np.uint8)
+            image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
+            if image is None:
+                raise ValueError("Impossible de décoder l'image.")
+
+            # Afficher l'image dans une fenêtre
+            cv2.imshow("Photo", image)
+
+            # Attendre une touche ou un délai pour éviter un "freeze"
+            key = cv2.waitKey(0)  # 0 signifie attendre une touche (ferme la fenêtre si nécessaire)
+            if key == ord('q'):  # Fermer sur la touche 'q'
+                cv2.destroyWindow("Photo")
+        except ValueError as e:
+            print(f"Erreur : {e}")
     elif wm.buttons["Up"]:
         robot.jog_pose([0,0,0.005,0,0,0])
     elif wm.buttons["Down"]:
