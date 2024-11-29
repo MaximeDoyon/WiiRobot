@@ -6,14 +6,24 @@
 :no_entry_sign: En relâchant le bouton A de la manette de Wii, tout mouvement du bras robotisé est stoppé     
 :no_entry_sign: Le bras robotisé bougera en fonction du mouvement de la manette de Wii ( lorsque le bouton A est maintenu enfoncé)    
 # Étapes de fonctionnement du programme
-   ## 1. Installation librairies
-   - Installer les dépendances (pip install -r requirements.txt)
-   
+   ## 1. Installation librairies (Toujours dans votre environnement virtuel)
+   - Installer les bibliothèques Bluetooth :
+   ```bash
+   sudo apt-get install bluetooth libbluetooth-dev
+   ```
+   - Installer pybluez :
+   ```bash
+   pip install git+https://github.com/pybluez/pybluez.git
+   ```
+   - Installer les dépendances
+   ```bash
+   pip install -r requirements.txt
+   ```
    
    
    ## 2. Étapes pour se connecter au robot avec la manette de Wii
    
-   1. Démarrer le programme main.py (Le fichier RobotController.py est pour le contrôler avec un clavier et le fichier reset.py est simplement pour remettre le robot en Learning mode a partir de code)
+   1. Démarrer le programme `main.py` (Le fichier `RobotController.py` est pour le contrôler avec un clavier et le fichier `reset.py` est simplement pour remettre le robot en Learning mode a partir de code)
    2. Appuyez sur le bouton 1 et 2 sur la manette de Wii simultanément.
    3. Lorsque les lumières sur la manette de Wii clignotent, appuyez sur Enter sur le clavier (Dans la console du programme)
    4. Patientez le temps que la manette de Wii se connecte (les lumières cesseront de clignoter et seule la première lumière restera allumée)
