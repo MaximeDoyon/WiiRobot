@@ -47,8 +47,8 @@ def display_robot_vision():
     cv2.destroyWindow("Vision en temps réel du robot Niryo")
 
 # Démarrage du thread pour la vision
-vision_thread = threading.Thread(target=display_robot_vision, daemon=True)
-vision_thread.start()
+# vision_thread = threading.Thread(target=display_robot_vision, daemon=True)
+# vision_thread.start()
 
 
 try:
@@ -70,6 +70,23 @@ try:
                 nouvelle_position = position_actuelle
                 nouvelle_position.z -= 0.05
                 robot.move_pose(nouvelle_position)
+        elif keyboard.is_pressed("n"):
+            try:
+                frame = robot.get_img_compressed()
+                np_frame = np.frombuffer(frame, dtype=np.uint8)
+                image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
+                if image is None:
+                    raise ValueError("Impossible de décoder l'image.")
+
+                # Afficher l'image dans une fenêtre
+                cv2.imshow("Photo", image)
+
+                # Attendre une touche ou un délai pour éviter un "freeze"
+                key = cv2.waitKey(0)  # 0 signifie attendre une touche (ferme la fenêtre si nécessaire)
+                if key == ord('q'):  # Fermer sur la touche 'q'
+                    cv2.destroyWindow("Photo")
+            except ValueError as e:
+                print(f"Erreur : {e}")
 
 
         #prendre objet
