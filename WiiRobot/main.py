@@ -5,6 +5,7 @@ import time
 import sys
 from pyniryo import *
 import time
+import numpy as np
 ip_robot_address = "10.4.1.51"
 
 robot = NiryoRobot(ip_robot_address)
@@ -109,7 +110,15 @@ while True:
         vitesse_X = 0
         robot.move_pose(home)
         wm.speaker.beep()
-        #print("beep")
+    elif wm.buttons["B"]:
+        frame = robot.get_img_compressed()
+        np_frame = np.frombuffer(frame, dtype=np.uint8)
+        image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
+        if image is None:
+            raise ValueError("Impossible de décoder l'image.")
+        cv2.imshow("Photo", image)
+        time.sleep(5)
+        cv2.destroyWindow("Photo")
     elif wm.buttons["Up"]:
         robot.jog_pose([0,0,0.005,0,0,0])
     elif wm.buttons["Down"]:

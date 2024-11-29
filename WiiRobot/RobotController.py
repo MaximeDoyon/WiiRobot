@@ -32,7 +32,6 @@ def display_robot_vision():
             image = cv2.imdecode(np_frame, cv2.IMREAD_COLOR)
             if image is None:  # Vérifiez si la décompression a échoué
                 raise ValueError("Impossible de décoder l'image.")
-            cv2.destroyWindow()
             # Afficher l'image dans la fenêtre
             cv2.imshow("Vision en temps réel du robot Niryo", image)
             time.sleep(1)
