@@ -35,6 +35,8 @@
    3. Commencez par un test simple et appuyez sur 1 ou 2 et maintenez ces boutons pour activer le convoyeur et s'assurer que tout fonctionne.
    4. Le relâchement de 1 ou 2 stoppe le convoyeur.
    5. Un clic sur le bouton + ou - ouvre et ferme la pince.
+   6. Un clic sur le bouton B de la manette de Wii prendre une photo avec la caméra du robot et l'affiche sur l'écran. (Voir étape suivante pour reprendre le fonctionnement du robot)
+   7. Tant que l'image est affichée à l'écran, le robot n'execute plus aucune commande. Pour fermer l'image appuyez sur la touche "q" de votre clavier. Le robot sera à nouveau à l'écoute de vos commandes.
    ## 4. Étapes pour faire fonctionner le robot (Mouvement du bras)
    1. Placez la manette de Wii pour qu'elle pointe vers le ciel le plus droit possible.
    2. ***Attention, la prochaine étape fera bouger le bras robotisé***
